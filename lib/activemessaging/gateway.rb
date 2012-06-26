@@ -30,8 +30,10 @@ module ActiveMessaging
         # for each connection, start a thread
         @@connections.each do |name, conn|
           @@connection_threads[name] = Thread.start do
+            loop_counter = 0
             while @@running
               begin
+                ActiveMessaging.logger.error "ActiveMessaging: thread[#{name}]: counter = #{loop_counter}" if (loop_counter += 1) % 10 == 0
                 Thread.current[:message] = nil
                 Thread.current[:message] = conn.receive
               #catch these but then stop looping
@@ -51,16 +53,23 @@ module ActiveMessaging
           end
         end
         
+        @@trap_counter = 0
+        @@sleeping = false
         while @@running
+          ActiveMessaging.logger.error "ActiveMessaging: trap: counter = #{@@trap_counter}" if (@@trap_counter += 1) % 10 == 0
           trap("TERM", "EXIT")
           living = false
           @@connection_threads.each { |name, thread| living ||=  thread.alive? }
           @@running = living
+          @@sleeping = true
           sleep 1
+          @@sleeping = false
         end
         ActiveMessaging.logger.error "All connection threads have died..."
       rescue Interrupt
-        ActiveMessaging.logger.error "\n<<Interrupt received>>\n"  
+        ActiveMessaging.logger.error "\n<<Interrupt received>>\n"
+      rescue SystemExit
+        ActiveMessaging.logger.error "SystemExit received: sleeping == #{@@sleeping}"
       rescue Object=>exception
         ActiveMessaging.logger.error "#{exception.class.name}: #{exception.message}\n\t#{exception.backtrace.join("\n\t")}"
         raise exception
