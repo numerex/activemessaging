@@ -84,7 +84,7 @@ module ActiveMessaging
     end
   end
 
-  def self.reload_activemessaging
+  def self.reload_activemessaging(first = false)
     # this is resetting the messaging.rb
     ActiveMessaging::Gateway.filters = []
     ActiveMessaging::Gateway.named_destinations = {}
@@ -92,13 +92,13 @@ module ActiveMessaging
 
     # now load the config
     load_config
-    load_processors(false)
+    load_processors(first)
   end
 
-  def self.load_activemessaging
+  def self.load_activemessaging(reload_pending = false)
     load_extensions
     load_config
-    load_processors
+    load_processors unless reload_pending
   end
 
   def self.start
