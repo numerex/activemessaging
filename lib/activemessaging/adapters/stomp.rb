@@ -30,7 +30,12 @@ module ActiveMessaging
           # create a new stomp connection
           connect_headers = {}
           connect_headers['client-id'] = cfg[:clientId] if cfg[:clientId]
+          connect_headers['heart-beat'] = cfg[:heartBeat] if cfg[:heartBeat]
           @stomp_connection = ::Stomp::Connection.new(cfg[:login],cfg[:passcode],cfg[:host],cfg[:port].to_i,cfg[:reliable],cfg[:reconnectDelay], connect_headers)
+
+          # Optionally add this at a later date to get better logging
+          # at the STOMP level
+          # @stomp_connection.set_logger(logger)
         end
         
         # Checks if the connection supports dead letter queues
