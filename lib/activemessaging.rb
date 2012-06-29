@@ -92,13 +92,15 @@ module ActiveMessaging
 
     # now load the config
     load_config
-    load_processors(first)
+# TODO see if we can live without this...
+#    load_processors(first)
   end
 
   def self.load_activemessaging(reload_pending = false)
     load_extensions
     load_config
-    load_processors unless reload_pending
+# TODO see if we can live without this...
+#    load_processors unless reload_pending
   end
 
   def self.start

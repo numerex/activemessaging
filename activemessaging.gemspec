@@ -80,18 +80,6 @@ Gem::Specification.new do |s|
     "lib/generators/active_messaging/processor/templates/processor_spec.rb",
     "lib/generators/active_messaging/processor/templates/processor_test.rb",
     "lib/tasks/start_consumers.rake",
-    "poller.rb",
-    "test/all_tests.rb",
-    "test/app/config/broker.yml",
-    "test/asqs_test.rb",
-    "test/config_test.rb",
-    "test/filter_test.rb",
-    "test/gateway_test.rb",
-    "test/jms_test.rb",
-    "test/reliable_msg_test.rb",
-    "test/stomp_test.rb",
-    "test/test_helper.rb",
-    "test/tracer_test.rb"
   ]
   s.homepage = %q{http://github.com/kookster/activemessaging}
   s.require_paths = ["lib"]
