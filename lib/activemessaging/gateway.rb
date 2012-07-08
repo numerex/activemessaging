@@ -33,7 +33,7 @@ module ActiveMessaging
             loop_counter = 0
             while @@running
               begin
-                ActiveMessaging.logger.error "ActiveMessaging: thread[#{name}]: messages = #{loop_counter}" if (loop_counter += 1) % 100 == 0
+                #ActiveMessaging.logger.error "ActiveMessaging: thread[#{name}]: messages = #{loop_counter}" if (loop_counter += 1) % 100 == 0
                 Thread.current[:message] = nil
                 Thread.current[:message] = conn.receive
               #catch these but then stop looping
@@ -56,7 +56,7 @@ module ActiveMessaging
         @@trap_counter = 0
         @@sleeping = false
         while @@running
-          ActiveMessaging.logger.error "ActiveMessaging: trap: hours = #{@@trap_counter / 3600}" if (@@trap_counter += 1) % 3600 == 0
+          #ActiveMessaging.logger.error "ActiveMessaging: trap: hours = #{@@trap_counter / 3600}" if (@@trap_counter += 1) % 3600 == 0
           trap("TERM", "EXIT")
           living = false
           @@connection_threads.each { |name, thread| living ||=  thread.alive? }
