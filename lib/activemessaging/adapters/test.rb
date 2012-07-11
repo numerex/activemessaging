@@ -7,10 +7,10 @@ module ActiveMessaging
       class Connection < ActiveMessaging::Adapters::BaseConnection
         register :test
         
-        attr_accessor :config, :subscriptions, :destinations, :connected, :received_messages, :unreceived_messages
+        attr_accessor :configuration, :subscriptions, :destinations, :connected, :received_messages, :unreceived_messages
         
         def initialize cfg
-          @config = cfg
+          @configuration = cfg
           @subscriptions = []
           @destinations = []
           @received_messages = []
